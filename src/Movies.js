@@ -18,7 +18,6 @@ export const Movies = () => {
   }, [page]);
   const handleChange = (event, value) => {
     dispatch(movies.actions.setPage(value))
-    setOpen(true)
   }
 
   const selectMovie = (id) => {
