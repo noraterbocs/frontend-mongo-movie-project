@@ -5,6 +5,7 @@ export const movies = createSlice({
   name: 'movies',
   initialState: {
     allMovies: [],
+    singleMovie: [],
     page: 1,
     limit: 10
 
@@ -21,12 +22,15 @@ export const movies = createSlice({
     setLimit: (store, action) => {
       store.limit = action.payload
       console.log(action.payload)
+    },
+    setSingleMovie: (store, action) => {
+      store.singleMovie = action.payload
+      console.log(action.payload)
     }
   }
 });
 
 // a thunk to handle the API request
-// two API requests one for the startLabyrinth and one for all the rest
 export const fetchMovies = (page) => {
   return (dispatch) => {
     dispatch(ui.actions.setLoading(true))
@@ -45,3 +49,22 @@ export const fetchMovies = (page) => {
       .finally(() => dispatch(ui.actions.setLoading(false)))
   };
 };
+
+export const fetchSingleMovie = (id) => {
+  return (dispatch) => {
+    dispatch(ui.actions.setLoading(true))
+    const options = {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    fetch(`https://project-mongo-api-jbnyu77ahq-lz.a.run.app/movies/${id}`, options)
+      .then((response) => response.json())
+      .then((json) => {
+        dispatch(movies.actions.setSingleMovie(json))
+      })
+      .finally(() => dispatch(ui.actions.setLoading(false)))
+  };
+}

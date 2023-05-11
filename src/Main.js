@@ -4,7 +4,7 @@ import React from 'react';
 
 export const Main = () => {
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ height: '100%' }}>
       <Typography variant="h1" sx={{ textAlign: 'center' }}>
   Movies
       </Typography>
