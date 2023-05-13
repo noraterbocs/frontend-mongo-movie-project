@@ -92,32 +92,29 @@ export const Movies = () => {
               <Typography id="transition-modal-title" variant="h6">
               Title: {singleMovie.title}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6">
+              <Typography id="transition-modal-title" variant="body1">
               Director: {singleMovie.director}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6">
+              <Typography id="transition-modal-title" variant="body1">
               Cast: {singleMovie.cast}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6">
+              <Typography id="transition-modal-title" variant="body1">
               Country: {singleMovie.country}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6">
+              <Typography id="transition-modal-title" variant="body1">
               Release year: {singleMovie.release_year}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6">
+              <Typography id="transition-modal-title" variant="body1">
               Rating: {singleMovie.rating}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6">
+              <Typography id="transition-modal-title" variant="body1">
               Duration: {singleMovie.duration}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6">
+              <Typography id="transition-modal-title" variant="body1">
               Genre: {singleMovie.listed_in}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6">
+              <Typography id="transition-modal-title" variant="body1">
               Type: {singleMovie.type}
-              </Typography>
-              <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                {singleMovie.description}
               </Typography>
             </Box>
           </Fade>
