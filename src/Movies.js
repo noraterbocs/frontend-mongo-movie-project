@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-underscore-dangle */
-import { Box, Button, Backdrop, Card, CardActions, CardContent, Container, Fade, Grid, Modal, Pagination, Typography } from '@mui/material';
+import { Box, Button, Backdrop, Card, CardActions, CardContent, Container, Fade, Grid, Modal, Pagination, Typography, Link } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchMovies, fetchSingleMovie, movies } from 'reducers/movies';
+import { BiLink } from 'react-icons/bi'
 
 export const Movies = () => {
   const dispatch = useDispatch()
@@ -12,10 +14,14 @@ export const Movies = () => {
   const page = useSelector((store) => store.movies.page)
   const [open, setOpen] = React.useState(false);
   const singleMovie = useSelector((store) => store.movies.singleMovie)
+  const fetchMoviesAPI = () => {
+    dispatch(fetchMovies(page))
+  }
 
   useEffect(() => {
-    dispatch(fetchMovies(page))
-  }, [page]);
+    fetchMoviesAPI()
+  }, [page])
+
   const handleChange = (event, value) => {
     dispatch(movies.actions.setPage(value))
   }
@@ -25,12 +31,13 @@ export const Movies = () => {
     dispatch(fetchSingleMovie(id))
   }
   const handleClose = () => setOpen(false);
+
   const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    maxWidth: '100%',
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -39,16 +46,16 @@ export const Movies = () => {
 
   return (
     <Container maxWidth="100%" sx={{ display: 'flex', flexWrap: 'wrap' }}>
-      <Grid container spacing={2} justifyContent="center">
+      <Grid container spacing={2} justifyContent="center" sx={{ boxSizing: 'border-box' }}>
         {allMovies && allMovies.map((movie) => {
           return (
-            <Grid item xs={12} sm={8} md={6} lg={4}>
-              <Card sx={{ minWidth: 275, height: '100%' }}>
+            <Grid item xs={12} sm={8} md={6} lg={4} key={movie._id}>
+              <Card sx={{ minWidth: 275, height: '100%', bgcolor: '#f0f3ff' }}>
                 <CardContent>
                   <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     {movie.type}
                   </Typography>
-                  <Typography variant="h5" component="div">
+                  <Typography sx={{ color: '#fe8be3' }} variant="h5" component="div">
                     {movie.title}
                   </Typography>
                   <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -59,7 +66,7 @@ export const Movies = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" onClick={() => selectMovie(movie._id)}>Learn More</Button>
+                  <Button sx={{ color: '#8baafe' }} size="small" onClick={() => selectMovie(movie._id)}>Show More</Button>
                 </CardActions>
               </Card>
             </Grid>
@@ -67,7 +74,7 @@ export const Movies = () => {
         })}
       </Grid>
 
-      <Container sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+      <Container sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center', flexDirection: 'column' }}>
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
@@ -82,31 +89,31 @@ export const Movies = () => {
           }}>
           <Fade in={open}>
             <Box sx={style}>
-              <Typography id="transition-modal-title" variant="h6" component="h2">
+              <Typography id="transition-modal-title" variant="h6">
               Title: {singleMovie.title}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6" component="h2">
+              <Typography id="transition-modal-title" variant="h6">
               Director: {singleMovie.director}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6" component="h2">
+              <Typography id="transition-modal-title" variant="h6">
               Cast: {singleMovie.cast}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6" component="h2">
+              <Typography id="transition-modal-title" variant="h6">
               Country: {singleMovie.country}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6" component="h2">
+              <Typography id="transition-modal-title" variant="h6">
               Release year: {singleMovie.release_year}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6" component="h2">
+              <Typography id="transition-modal-title" variant="h6">
               Rating: {singleMovie.rating}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6" component="h2">
+              <Typography id="transition-modal-title" variant="h6">
               Duration: {singleMovie.duration}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6" component="h2">
+              <Typography id="transition-modal-title" variant="h6">
               Genre: {singleMovie.listed_in}
               </Typography>
-              <Typography id="transition-modal-title" variant="h6" component="h2">
+              <Typography id="transition-modal-title" variant="h6">
               Type: {singleMovie.type}
               </Typography>
               <Typography id="transition-modal-description" sx={{ mt: 2 }}>
@@ -115,7 +122,8 @@ export const Movies = () => {
             </Box>
           </Fade>
         </Modal>
-        <Pagination count={count} page={page} onChange={handleChange} sx={{ textAlign: 'center' }} />
+        <Pagination count={count} page={page} onChange={handleChange} sx={{ textAlign: 'center', color: '#ffffff' }} />
+        <Link href="https://project-mongo-api-jbnyu77ahq-lz.a.run.app/api-docs/" underline="hover" variant="subtitle1" color="#ffffff"><BiLink /> API documentation</Link>
       </Container>
     </Container>
   )
